@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      /* 为了确保没有默认边距 */
+      padding: 0;
+      /* 为了确保没有默认填充 */
+      background-image: url('body背景.jpeg');
+      /* background-size: cover; */
+      /* 使背景图尽可能覆盖整个屏幕 */
+      /* background-position: center; */
+      /* 将背景图居中 */
+      /* background-repeat: no-repeat; */
+      /* 防止背景图重复 */
+      height: 100vh;
+      /* 设置body的高度为视口的100% */
+    }
+    /* 設定文字動畫 */
+    @keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+/* 設定開始介面文字 */
+    h3 { 
+      transition: text-shadow 0.5s ease, color 0.5s ease;
+      pointer-events: none;
+      text-shadow: 
+        -1px -1px 3px black,  
+         1px -1px 3px black,
+        -1px  1px 3px black,
+         1px  1px 3px black;
+      /* user-select: none; */
+      /* animation: blink 0.7s infinite;  */
+}
+h3.選擇中{
+  animation: blink 0.7s infinite;
+  text-shadow: 2px 2px 4px blue;
+  color: skyblue;
+} 
+h4.選擇中{
+  animation: blink 0.7s infinite;
+  text-shadow: 2px 2px 4px blue;
+  color: skyblue;
+} 
+#過場{
+  position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: 700px;
+      max-height: 700px;
+      border: 2px solid #000;
+      overflow: hidden;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+}
+.過場{
+  position: relative;
+      width: 1500px;
+      height: 100%;
+      /* max-width: 200px; */
+      max-height: 700px;
+      overflow: hidden;
+      top: -354px;
+      transform: translate(-50%, -50%);
+      background-image: url('過場白.png');
+      z-index:100;
+}
+#背景圖片{
+  position: relative;
+      width: 100%;
+      /* 使用相對寬度，可以根據需要調整百分比 */
+      height: 100%;
+      /* 使用視口高度的百分比 */
+      max-width: 700px;
+      /* 最大寬度，防止容器過於擴展 */
+      max-height: 700px;
+      /* 最大高度，防止容器過於擴展 */
+      border: 2px solid #000;
+      overflow: hidden;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-image: url('背景.jpg');
+      background-size: cover;
+}
+    #startScreen {
+      position: relative;
+      width: 100%;
+      /* 使用相對寬度，可以根據需要調整百分比 */
+      height: 100%;
+      /* 使用視口高度的百分比 */
+      max-width: 700px;
+      /* 最大寬度，防止容器過於擴展 */
+      max-height: 700px;
+      /* 最大高度，防止容器過於擴展 */
+      background-color: rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* 調整為中央 */
+      background-size: cover;
+      text-align: center;
+      color: white;
+      font-size: 24px;
+    }
+#換角{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 259px;
+  max-height: 224px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url('s1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: none;
+}
+    #失敗 {
+      position: absolute;
+      width: 100%;
+      /* 使用相對寬度，可以根據需要調整百分比 */
+      height: 100%;
+      /* 使用視口高度的百分比 */
+      max-width: 500px;
+      /* 最大寬度，防止容器過於擴展 */
+      max-height: 200px;
+      /* 最大高度，防止容器過於擴展 */
+      border: 1px solid #000;
+      overflow: hidden;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* 調整為中央 */
+      background-color: #d1d1d1bb;
+      display: none;
+      text-align: center;
+      color: black;
+      font-size: 24px;
+    }
+
+    #遊戲容器 {
+      position: relative;
+      width: 100%;
+      /* 使用相對寬度，可以根據需要調整百分比 */
+      height: 100%;
+      /* 使用視口高度的百分比 */
+      max-width: 700px;
+      /* 最大寬度，防止容器過於擴展 */
+      max-height: 700px;
+      /* 最大高度，防止容器過於擴展 */
+      border: 1px solid #000;
+      overflow: hidden;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* 調整為中央 */
+      background-color: #000;
+      display: none;
+      /* background-image: url('/dao6ukg-3ea07db6-7804-40e6-89e9-7defa6fc36de.gif'); */
+    }
+    #紅色, #黃色, #綠色 {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: -15px;
+  }
+  #紅色 {
+    left: 5px;
+    background-color: red;
+  }
+  #黃色 {
+    left: 30px; /* 20px + 5px 間隔 */
+    background-color: yellow;
+  }
+  #綠色 {
+    left: 55px; /* 40px + 5px 間隔 */
+    background-color: green;
+  }
+  #生命 {
+    /* width: 20px;
+    height: 20px; */
+    position: absolute;
+    bottom: -20px;
+    left: 35px; /* 40px + 5px 間隔 */
+    /* border: 2px white solid; */
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow: 
+        -1px -1px 5px rgba(255, 64, 64, 0.822),  
+         1px -1px 5px rgba(255, 64, 64, 0.822),
+        -1px  1px 5px rgba(255, 64, 64, 0.822),
+         1px  1px 5px rgba(255, 64, 64, 0.822);
+  }
+
+  .heart {
+    position: relative;
+    width: 28px;
+    height: 23px;
+    position: absolute;
+    bottom: 40px;
+    left: 1px;
+}
+.heart::before, .heart::after {content:"";position: absolute;left: 14px;top: 0;width: 14px;height: 23px;background: red;border-radius: 39px 39px 0 0;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-o-transform: rotate(-45deg);transform: rotate(-45deg);-webkit-transform-origin: left bottom;-moz-transform-origin: left bottom;-o-transform-origin: left bottom;transform-origin: left bottom;}.heart::after {    left: 0;    -webkit-transform: rotate(45deg);    -moz-transform: rotate(45deg);    -o-transform: rotate(45deg);    transform: rotate(45deg);    -webkit-transform-origin: right bottom;    -moz-transform-origin: right bottom;    -o-transform-origin: right bottom;    transform-origin: right bottom;}.heart {    -webkit-animation: jump 1s infinite ease-out;    -moz-animation: jump 1s infinite ease-out;    -o-animation: jump 1s infinite ease-out;    animation: jump 1s infinite ease-out;}@keyframes jump {0%, 60%, 75%, 90%, 100% {    transform: scale(1);}15% {    transform: scale(0.6);}30% {    transform: scale(1);}45% {    transform: scale(0.7);}}
+    #玩家 {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      /* background-color: blue; */
+      background-size: cover;
+      opacity: 1;
+      transform: translate(-50%, -60%);
+      z-index: 99;
+    }
+
+    .子彈 {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      /* background-color: red; */
+      transform: translate(-50%, -50%);
+      background-image: url('子彈.png'); 
+      background-size: cover; 
+    }
+    .斧頭 {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      /* background-color: red; */
+      transform: translate(-50%, -50%);
+      background-image: url('斧頭.png'); 
+      background-size: cover; 
+    }
+    .億 {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      /* background-color: red; */
+      transform: translate(-50%, -50%);
+      background-image: url('億.png'); 
+      background-size: cover; 
+    }
+    .技能Q {
+      width: 256px; height: 0; 
+      overflow: hidden; 
+      transition: top 0.1s linear; 
+      position: absolute;
+
+      /* border-radius: 50%; */
+      /* background-color: red; */
+      transform: translate(-50%, 0);
+      background-image: url('賽恩Q.png'); 
+      background-size: cover; 
+    }
+    .滑稽球 {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      /* background-color: red; */
+      transform: translate(-50%, -50%);
+      background-image: url('滑稽球.png'); 
+      background-size: cover; 
+    }
+    .爆炸 {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      /* background-color: red; */
+      transform: translate(-50%, -50%);
+      background-image: url('爆炸.gif'); 
+      background-size: cover; 
+    }  
+
+    .紅攻擊 {
+      position: absolute;
+      width: 20px;
+      height: 37px;
+      transform: translate(-50%, -50%);
+      background-image:url('紅攻擊.png') ;
+      background-size: cover;
+    }
+    .黃攻擊 {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      transform: translate(-50%, -50%);
+      background-image:url('黃攻擊.png') ;
+      background-size: cover;
+    }
+    .綠攻擊 {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      transform: translate(-50%, -50%);
+      background-image:url('綠攻擊.png') ;
+      background-size: cover;
+    }
+      .武器選擇中{
+        border: solid aqua 2px;
+      }
+      .生氣貓{
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      transform: translate(-50%, -50%);
+      background-image:url('貓.png') ;
+      background-size: cover;
+    }
+      .賽恩{
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      transform: translate(-50%, -50%);
+      background-image:url('賽恩.png') ;
+      background-size: cover;
+      z-index: 98;
+    }
+
+  </style>
+</head>
+
+<body>
+  
+  <audio class="music" loop="true" src="激戰魂逗羅.mp3" id="激戰魂逗羅"  preload="auto"></audio>
+  <audio class="music" src="不滅之握.mp3" id="不滅之握" preload="auto"></audio>
+  <audio class="music" src="給他億.mp3" id="給他億" preload="auto"></audio>
+  <audio class="music" src="特別狠的球.mp3" id="特別狠的球" preload="auto"></audio>
+  <audio class="music" src="A他一刀.mp3" id="A他一刀" preload="auto"></audio>
+  <audio class="music" src="A他一刀2.mp3" id="A他一刀2" preload="auto"></audio>
+  <audio class="music" src="一刀.mp3" id="一刀" preload="auto"></audio>
+  <audio class="music" src="兩刀.mp3" id="兩刀" preload="auto"></audio>
+  <audio class="music" src="三刀.mp3" id="三刀" preload="auto"></audio>
+  <audio class="music" src="四刀.mp3" id="四刀" preload="auto"></audio>
+  <audio class="music" src="五刀.mp3" id="五刀" preload="auto"></audio>
+  <audio class="music" src="六刀.mp3" id="六刀" preload="auto"></audio>
+  <audio class="music" src="七刀.mp3" id="七刀" preload="auto"></audio>
+  <audio class="music" src="八刀.mp3" id="八刀" preload="auto"></audio>
+  <audio class="music" src="九刀.mp3" id="九刀" preload="auto"></audio>
+  <audio class="music" src="十刀.mp3" id="十刀" preload="auto"></audio>
+  <audio class="music" src="十一刀.mp3" id="十一刀" preload="auto"></audio>
+  <audio class="music" src="十二刀.mp3" id="十二刀" preload="auto"></audio>
+  <audio class="music" src="十三刀.mp3" id="十三刀" preload="auto"></audio>
+  <audio class="music" src="十四刀.mp3" id="十四刀" preload="auto"></audio>
+  <audio class="music" src="十五刀.mp3" id="十五刀" preload="auto"></audio>
+  <audio class="music" src="嘿嘿.mp3" id="嘿嘿" preload="auto"></audio>
+  <audio class="music" src="1A.mp3" id="1A" preload="auto"></audio>
+  <audio class="music" src="2A.mp3" id="2A" preload="auto"></audio>
+  <audio class="music" src="3A.mp3" id="3A" preload="auto"></audio>
+  <audio class="music" src="4A.mp3" id="4A" preload="auto"></audio>
+  <audio class="music" src="5A.mp3" id="5A" preload="auto"></audio>
+  <audio class="music" src="6A.mp3" id="6A" preload="auto"></audio>
+  <audio class="music" src="7A.mp3" id="7A" preload="auto"></audio>
+  <audio class="music" src="8A.mp3" id="8A" preload="auto"></audio>
+  <audio class="music" src="9A.mp3" id="9A" preload="auto"></audio>
+  <audio class="music" src="10A.mp3" id="10A" preload="auto"></audio>
+  <audio class="music" src="藤往後什麼1.mp3" id="藤往後什麼1" preload="auto"></audio>
+  <audio class="music" src="藤往後什麼2.mp3" id="藤往後什麼2" preload="auto"></audio>
+  <audio class="music" src="藤往後什麼3.mp3" id="藤往後什麼3" preload="auto"></audio>
+  <audio class="music" src="殭屍.ogg" id="殭屍" preload="auto"></audio>
+
+  <!-- autoplay="autoplay" -->
+
+<div id="過場">
+<div id="背景圖片">
+<div id="startScreen">
+  <div id="lifetime" style="display: block"></div>
+  <div id="換角"></div>
+  <h3 id="開始文字">開始</h3>
+  <h3 id="更換文字">更換角色</h3>
+  <h3 id="設定音量文字">設定音量大小：100%</h3>
+  <div></div>
+</div>
+
+<div id="遊戲容器">
+    <div id="玩家"></div>
+    <h5 id="紅色">　　</h5>
+    <h5 id="黃色">　　</h5>
+    <h5 id="綠色">　　</h5>
+    <h5 id="生命"></h5>
+    <div class="heart"></div>
+  </div>
+  <div id="失敗">你好爛，你要繼續遊戲嗎？
+  <h5>
+  </h5>
+  <h4 id="接受">＞ 繼續遊戲 ＜</h4>
+  <h4 id="拒絕">結束遊戲</h4>
+  </div>
+
+</div>
+<script>
+  let 音量= 0.5;
+var 音效標誌 = ['激戰魂逗羅','不滅之握','給他億','特別狠的球','A他一刀','A他一刀2','一刀','兩刀','三刀','四刀','五刀','六刀','七刀','八刀','九刀','十刀','十一刀','十二刀','十三刀','十四刀','十五刀','嘿嘿','1A','2A','3A','4A','5A','6A','7A','8A','9A','10A','藤往後什麼1','藤往後什麼2','藤往後什麼3','殭屍'];
+var 音效元素集合 = {};
+音效標誌.forEach(function(音效ID) {
+  var 音效元素 = document.getElementById(音效ID);
+    if (音效元素) {
+      音效元素集合[音效ID] = 音效元素;
+      音效元素.volume = 音量;
+      } else {console.error('音效元素不存在: ' + 音效ID);}
+  });
+  function 播放音效(音效ID) {
+  var 音效元素 = 音效元素集合[音效ID];
+  // 检查音效元素是否存在
+  if (音效元素) {
+    // 播放音效
+    音效元素.play();
+  } else {
+    console.error('音效元素不存在: ' + 音效ID);
+  }
+}
+
+    const 生命元素 = document.getElementById("生命")
+    const startScreen = document.getElementById('startScreen');
+    const gameContainer = document.getElementById('遊戲容器');
+    const 開始介面文字 = document.querySelectorAll('#startScreen h3');
+    const 失敗介面文字 = document.querySelectorAll('#失敗 h4');
+    const 玩家元素 = document.getElementById('玩家');
+    玩家元素.style.display = 'block';
+    const 失敗 = document.getElementById('失敗');
+    const 計時 = document.getElementById('lifetime');
+    var gameActive = false; // 遊戲狀態變數
+    var 計時開始;
+    var 每秒計時;
+    var 生氣貓轉 = false
+
+    // 開始遊戲函數
+    function startGame() {
+      gameActive = true; // 遊戲狀態設置為開始
+      startScreen.style.display = 'none'; //隱藏開始介面
+      gameContainer.style.display = 'block'; // 顯示遊戲容器
+      玩家X座標 = 350; 玩家Y座標 = 600; //玩家位置回到中間
+      // 清除上一次遊戲的子彈
+      var 前子彈 = document.getElementsByClassName('子彈');
+      while (前子彈.length > 0) {
+        前子彈[0].parentNode.removeChild(前子彈[0]);
+      }
+      
+    }
+    document.addEventListener('keyup', (event) => { //顯示開始介面的時候按enter才開始
+      if (event.key === 'Enter' && startScreen.style.display !== 'none' && 開始介面文字[0].classList.contains('選擇中')) {
+        startGame();
+        開始時間();
+        更新時間();
+        開始介面文字.forEach(element => {element.classList.remove('選擇中');})
+      }
+    });
+    const 換角陣列=['s1.png','s2.png','s3.png','s4.png']
+    let 選擇角色=0;
+    document.addEventListener('keyup', (event) => { //顯示開始介面的時候按enter才開始
+      if (event.key === 'ArrowLeft' && startScreen.style.display !== 'none' && 開始介面文字[1].classList.contains('選擇中')) {
+        選擇角色 = (選擇角色 - 1 + 換角陣列.length) % 換角陣列.length;
+
+        document.getElementById('換角').style.backgroundImage = 'url(' + 換角陣列[選擇角色] + ')'
+    } else if (event.key === 'ArrowRight'&& startScreen.style.display !== 'none' && 開始介面文字[1].classList.contains('選擇中')) {
+      選擇角色 = (選擇角色 + 1 ) % 換角陣列.length;
+      document.getElementById('換角').style.backgroundImage = 'url(' + 換角陣列[選擇角色] + ')'
+  
+    }
+      
+    });
+    document.addEventListener('keyup', (event) => { //顯示開始介面的時候按enter才開始
+      if (event.key === 'ArrowLeft'  && 音量.toFixed(1) >= 0.05  && startScreen.style.display !== 'none' && 開始介面文字[2].classList.contains('選擇中')) {
+        音量 = ((音量*10)-0.5)/10;
+        document.getElementById("設定音量文字").innerText = '設定音量大小：'+ Math.round(音量*200) + '%' ;
+        for (var i = 0; i < 音效標誌.length; i++) {
+          document.getElementsByClassName('music')[i].volume = 音量;
+          console.log(音量);
+    }
+      }
+      if (event.key === 'ArrowRight' && 音量.toFixed(1) <= 0.95  && startScreen.style.display !== 'none' && 開始介面文字[2].classList.contains('選擇中')) {
+        音量 = ((音量*10)+0.5)/10;
+        document.getElementById("設定音量文字").innerText = '設定音量大小：'+ Math.round(音量*200) + '%' 
+        for (var i = 0; i < 音效標誌.length; i++) {
+          document.getElementsByClassName('music')[i].volume = 音量;
+          console.log(音量);
+    }
+
+      }
+
+    });
+    
+    //開始介面選擇函式
+    function 選擇中(targetElement) {
+      const h3Elements = document.querySelectorAll('#startScreen h3');
+      h3Elements.forEach(element => {
+        element.classList.remove('選擇中');
+      });
+      targetElement.classList.add('選擇中');
+
+    if (startScreen.style.display !== 'none' && 開始介面文字[1].classList.contains('選擇中')) {
+    document.getElementById('換角').style.display= 'block'
+    }else (document.getElementById('換角').style.display= 'none')
+    }
+    
+    let 目前選擇 = 0;
+    document.addEventListener('keyup', (event) => { 
+      if (!開始介面文字[目前選擇].classList.contains('選擇中') && startScreen.style.display !== 'none') {
+        // 没有选择时按下任意键选择第一个
+        選擇中(開始介面文字[目前選擇]);
+        播放音效('激戰魂逗羅');
+      } else if (startScreen.style.display !== 'none') {
+        
+    if (event.key === 'ArrowDown') {
+      // 按下 ArrowDown 键时增加索引，确保索引不超过数组边界
+      目前選擇 = (目前選擇 + 1) % 開始介面文字.length;
+    } else if (event.key === 'ArrowUp') {
+      // 按下 ArrowUp 键时减少索引，确保索引不小于 0
+      目前選擇 = (目前選擇 - 1 + 開始介面文字.length) % 開始介面文字.length;
+    }
+    選擇中(開始介面文字[目前選擇]);
+  }
+});
+
+// 結束遊戲函數
+// function endGame() {
+//   gameActive = false
+//   子彈陣列.length = 0;
+//   startScreen.style.display = 'block'; //顯示開始介面
+//   gameContainer.style.display = 'none'; // 隱藏遊戲容器
+//   失敗.style.display = 'none';  //隱藏結算介面
+// }
+function 失敗選擇中(targetElement) {
+      const h4Elements = document.querySelectorAll('#失敗 h4');
+      h4Elements.forEach(element => {
+        element.classList.remove('選擇中');
+      });
+      targetElement.classList.add('選擇中');
+    }
+    let 失敗選擇=0;
+
+    document.addEventListener('keyup', (event) => { 
+    if (event.key === 'ArrowDown' &&  失敗.style.display == 'block') {
+      // 按下 ArrowDown 键时增加索引，确保索引不超过数组边界
+      失敗選擇 = (失敗選擇 + 1) % 失敗介面文字.length;
+    } else if (event.key === 'ArrowUp' &&  失敗.style.display == 'block') {
+      // 按下 ArrowUp 键时减少索引，确保索引不小于 0
+      失敗選擇 = (失敗選擇 - 1 + 失敗介面文字.length) % 失敗介面文字.length;
+    }
+    失敗選擇中(失敗介面文字[失敗選擇]);
+    if(失敗介面文字[失敗選擇]==失敗介面文字[0] &&  失敗.style.display == 'block'){
+      document.getElementById("接受").innerText = '＞ 繼續遊戲 ＜'
+      document.getElementById("拒絕").innerText = '　 結束遊戲 　'
+    }else if (失敗介面文字[失敗選擇]==失敗介面文字[1] &&  失敗.style.display == 'block'){
+      document.getElementById("接受").innerText = '　 繼續遊戲 　'
+      document.getElementById("拒絕").innerText = '＞ 結束遊戲 ＜'
+    }
+    if(event.key === 'Enter' && 失敗介面文字[失敗選擇]==失敗介面文字[0] &&  失敗.style.display == 'block'){
+      失敗.style.display = 'none'
+        生命值 +=3
+        生命元素.innerText = 'X' + 生命值;
+        if(生命值==3){
+        玩家X座標=350;玩家Y座標=600;
+        setTimeout(function () {玩家元素.style.display = 'block';},100);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},100);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},400);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},700);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},1000);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},1300);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},1600);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},1900);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},2200);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},2500);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},2800);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},3100);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},3400);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},3700);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},4000);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},4300);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},4600);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},4900);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},5200); 
+        setTimeout(function () {無敵狀態 = false},5200);
+        }
+    }else if (event.key === 'Enter' && 失敗介面文字[失敗選擇]==失敗介面文字[1] &&  失敗.style.display == 'block'){
+      // 過場()
+    }
+});
+
+document.addEventListener('keyup', (event) => { //按R返回開始介面
+  if (event.key === 'r' ) {
+    location.reload() ;
+    // endGame()
+  }
+    });
+//顯示經過時間
+function 開始時間(){
+  計時開始 = new Date().getTime();
+  每秒計時 = setInterval(更新時間,100);
+}
+function 結束計時(){
+  clearInterval(每秒計時);
+}
+function 更新時間(){
+  gameActive = true;
+  var 當前時間 = new Date().getTime();
+  var 經過時間 = ((當前時間 - 計時開始)/1000).toFixed(1);
+
+  // 上左右
+       if(經過時間 == 1  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=680;停止Y=20;生氣貓移動速度=1;生氣貓血量=20;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=30 ;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20); }
+  else if(經過時間 == 2  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=630;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=80 ;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 3  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=580;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=130;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 4  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=530;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=180;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 5  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=480;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=230;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 6  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=430;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=280;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 7  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=380;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=330;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 8  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=330;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=380;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 9  ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=280;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=430;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 10 ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=230;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=480;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 11 ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=180;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=530;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 12 ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=130;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=580;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 13 ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=80 ;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=630;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+  else if(經過時間 == 14 ){生怪磚.x = 10;生怪磚.y = 20;生氣貓方向=方向右;停止X=30 ;停止Y=20;生氣貓移動速度=1;創造生氣貓();setTimeout(function () {生怪磚.x = 690;生怪磚.y = 70;生氣貓方向=方向左;停止X=680;停止Y=70;生氣貓移動速度=1;創造生氣貓();}, 20);}
+// Z右
+  else if(經過時間 == 18.0 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;生氣貓血量=15;創造生氣貓();}
+  else if(經過時間 == 18.5 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 19.0 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 19.5 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 20.0 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 20.5 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 21.0 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 21.5 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 22.0 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 22.5 ){生怪磚.x = 600;生怪磚.y = 10;生氣貓方向=方向下;左上X=600;左上Y=500;下X=150,下Y=50;右上X=150,右上Y=500;生氣貓移動速度=2;創造生氣貓();}
+// Z左
+  else if(經過時間 == 23.0 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 23.5 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 24.0 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 24.5 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 25.0 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 25.5 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 26.0 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 26.5 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 27.0 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 27.5 ){生怪磚.x = 100;生怪磚.y = 10;生氣貓方向=方向下;右上X=100;右上Y=500;下X=549,下Y=50;左上X=549,左上Y=500;生氣貓移動速度=2;創造生氣貓();}
+  else if(經過時間 == 40.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 40.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 41.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 41.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 42.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 42.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 43.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 43.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 44.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 44.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 45.0 ){創建滑稽球();創建滑稽球();生怪磚.x = 350;生怪磚.y = 50;生氣貓轉=true;生氣貓血量=30;創造生氣貓();}
+  else if(經過時間 == 45.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 46.0 ){創建滑稽球();創建滑稽球();創造生氣貓();}
+  else if(經過時間 == 46.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 47.0 ){創建滑稽球();創建滑稽球();創造生氣貓();}
+  else if(經過時間 == 47.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 48.0 ){創建滑稽球();創建滑稽球();創造生氣貓();}
+  else if(經過時間 == 48.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 49.0 ){創建滑稽球();創建滑稽球();創造生氣貓();}
+  else if(經過時間 == 49.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 50.0 ){創建滑稽球();創建滑稽球();創造生氣貓();}
+  else if(經過時間 == 51.0 ){創造生氣貓();}
+  else if(經過時間 == 52.0 ){創造生氣貓();}
+  else if(經過時間 == 53.0 ){創造生氣貓();}
+  else if(經過時間 == 54.0 ){創造生氣貓();}
+  else if(經過時間 == 55.0 ){創造生氣貓();}
+  else if(經過時間 == 56.0 ){創造生氣貓();}
+  else if(經過時間 == 57.0 ){創造生氣貓();}
+  else if(經過時間 == 58.0 ){創造生氣貓();}
+  else if(經過時間 == 59.0 ){創造生氣貓();}
+  else if(經過時間 == 60.0 ){創造生氣貓();}
+  else if(經過時間 == 72.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 72.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 73.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 73.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 74.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 74.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 75.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 75.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 76.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 76.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 77.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 77.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 78.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 78.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 79.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 79.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 80.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 80.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 81.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 81.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 82.0 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 82.5 ){創建滑稽球();創建滑稽球();}
+  else if(經過時間 == 85.0 ){創建賽恩();}
+}
+
+
+let 玩家X座標; // 調整為方框的中央
+let 玩家Y座標; // 調整為方框的中央
+let 賽恩X座標,賽恩Y座標,賽恩血量,賽恩移動速度;
+let 生命值= 10; 生命元素.innerText = 'X' + 生命值;
+let 生氣貓X座標,生氣貓Y座標,生氣貓方向,生氣貓血量,上X,上Y,下X,下Y,左X,左Y,右X,右Y,左上X,左上Y,右上X,右上Y,左下X,左下Y,右下X,右下Y;
+let 停止X,停止Y;
+const 生怪磚 = { x: 350, y: 200 };
+let 方向停 = Math.atan2(0,0);
+let 方向右 = Math.atan2(0,1); 
+let 方向右上 = Math.atan2(-1,1); 
+let 方向上 = Math.atan2(-1,0); 
+let 方向左上 = Math.atan2(-1,-1); 
+let 方向左 = Math.atan2(0,-1); 
+let 方向左下 = Math.atan2(1,-1); 
+let 方向下 = Math.atan2(1,0); 
+let 方向右下 = Math.atan2(1,1);
+let 生氣貓移動速度 = 0.3
+let 上次時間戳 = 0;
+let 貓轉角 = 4.71;
+
+let 無敵狀態 = false;
+const 子彈陣列 = [];
+const 滑稽球陣列 = [];
+const 爆炸陣列 = [];
+const 斧頭陣列 = [];
+const 賽恩陣列 = [];
+const 億陣列 = [];
+const 技能Q陣列 = [];
+let 子彈X座標, 子彈Y座標;
+let 爆炸X座標, 爆炸Y座標;
+let 斧頭X座標, 斧頭Y座標;
+let 上移 = false;
+let 下移 = false;
+let 左移 = false;
+let 右移 = false;
+let 加速 = false;
+let 緩速 = 1;
+
+
+
+  //武器攻擊
+  const 武器選擇陣列 =['紅色', '黃色', '綠色'];
+  const 紅攻擊陣列 = [];
+  const 黃攻擊陣列 = [];
+  const 綠攻擊陣列 = [];
+  const 生氣貓陣列 = [];
+
+  let 開始攻擊 = false
+    // setInterval(() => {
+    //   for (let ii = 0; ii < 2; ii++) {
+    //     創造攻擊();
+    //   }
+    // }, 500);
+
+      function 死掉(){
+        if (!無敵狀態) {
+          爆炸X座標=玩家X座標;
+          爆炸Y座標=玩家Y座標;
+        爆炸();
+        生命元素.innerText = 'X' + (生命值 -= 1)
+        setTimeout(function () {無敵狀態 = true},1);
+        玩家元素.style.display = 'none';
+        if(生命值>0){
+        setTimeout(function () {玩家X座標=350;玩家Y座標=600;},1950);
+        setTimeout(function () {玩家元素.style.display = 'block';},2000);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},2000);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},2300);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},2600);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},2900);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},3200);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},3500);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},3800);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},4100);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},4400);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},4700);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},5000);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},5300);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},5600);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},5900);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},6200);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},6500);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},6800);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},7100); 
+        setTimeout(function () {無敵狀態 = false},7100);
+      }else if (生命值 <= 0){setTimeout(function () {失敗.style.display = 'block';選擇中(失敗介面文字[0]);},3000)
+        }
+    
+      }
+    }
+    
+    
+
+    function 創造紅攻擊(){
+      if (!gameActive) {
+        return; // 如果遊戲未開始，不生成
+      }
+      const 紅攻擊元素 = document.createElement('div')
+    紅攻擊元素.className = '紅攻擊';
+    document.getElementById('遊戲容器').appendChild(紅攻擊元素);
+
+    let 紅攻擊X座標, 紅攻擊Y座標;
+    紅攻擊X座標=玩家X座標;
+    紅攻擊Y座標=玩家Y座標-30;
+
+    紅攻擊元素.style.left = 紅攻擊X座標 + 'px';
+    紅攻擊元素.style.top  = 紅攻擊Y座標 + 'px';
+
+    紅攻擊陣列.push({ 紅X: 紅攻擊X座標, 紅Y: 紅攻擊Y座標 , 攻擊力: 6  ,元素: 紅攻擊元素});
+
+  }
+  
+      // 更新紅攻擊的位置
+      function 更新紅攻擊移動() {
+      紅攻擊陣列.forEach((紅攻擊, index) => {
+        const 紅攻擊移動速度 = 5;
+        // 如果沒有固定方向，則計算並固定方向
+        if (!紅攻擊.固定方向) {
+          紅攻擊.方向 = Math.atan2(-1,0);
+          紅攻擊.固定方向 = true;
+        }
+        紅攻擊.紅X += Math.cos(紅攻擊.方向) * 紅攻擊移動速度;
+        紅攻擊.紅Y += Math.sin(紅攻擊.方向) * 紅攻擊移動速度;
+
+
+        const 紅攻擊元素 = document.getElementsByClassName('紅攻擊')[index];
+        if (gameActive == true) { //遊戲結束時停止
+          紅攻擊元素.style.left = 紅攻擊.紅X + 'px';
+          紅攻擊元素.style.top = 紅攻擊.紅Y + 'px';
+        }
+        // 移除超出邊界的攻擊
+        if (
+          紅攻擊.紅X < -10 ||
+          紅攻擊.紅Y < -10 ||
+          紅攻擊.紅X > 700 || 
+          紅攻擊.紅Y > 700 
+        ) {
+          紅攻擊陣列.splice(index, 1);
+          紅攻擊元素.remove();
+        }
+      });
+    }
+    let 黃子彈數量 = 18
+    function 創造黃攻擊(){
+    if (!gameActive) {
+        return; // 如果遊戲未開始，不生成
+      }
+      for (let i = 0; i < 黃子彈數量; i++) {
+    const 黃攻擊元素 = document.createElement('div')
+    黃攻擊元素.className = '黃攻擊';
+    document.getElementById('遊戲容器').appendChild(黃攻擊元素);
+
+        let 黃攻擊X座標, 黃攻擊Y座標;
+        黃攻擊X座標 = 玩家X座標;
+        黃攻擊Y座標 = 玩家Y座標;
+    黃攻擊元素.style.left = 黃攻擊X座標 + 'px';
+    黃攻擊元素.style.top  = 黃攻擊Y座標 + 'px';
+
+    黃攻擊陣列.push({ 黃X: 黃攻擊X座標, 黃Y: 黃攻擊Y座標 ,方向: ( i - 83 ) * Math.PI/ (150) , 攻擊力: 1 ,元素: 黃攻擊元素  });
+    //圓
+    // 方向: (i % 黃子彈數量) * Math.PI * 2 / 黃子彈數量 } 
+    }
+  }
+      // 更新黃攻擊的位置
+      function 更新黃攻擊移動() {
+      黃攻擊陣列.forEach((黃攻擊, index) => {
+        const 黃攻擊移動速度 = 5;
+        // 如果沒有固定方向，則計算並固定方向
+        // if (!黃攻擊.固定方向) {
+        //   黃攻擊.方向 = Math.atan2(-1,0);
+        //   黃攻擊.固定方向 = true;
+        // }
+        黃攻擊.黃X += Math.cos(黃攻擊.方向) * 黃攻擊移動速度;
+        黃攻擊.黃Y += Math.sin(黃攻擊.方向) * 黃攻擊移動速度;
+
+
+        const 黃攻擊元素 = document.getElementsByClassName('黃攻擊')[index];
+        if (gameActive == true) { //遊戲結束時停止
+          黃攻擊元素.style.left = 黃攻擊.黃X + 'px';
+          黃攻擊元素.style.top = 黃攻擊.黃Y + 'px';
+        }
+        // 移除超出邊界的攻擊
+        if (
+          黃攻擊.黃X < -10 ||
+          黃攻擊.黃Y < -10 ||
+          黃攻擊.黃X > 700 || 
+          黃攻擊.黃Y > 700 
+        ) {
+          黃攻擊陣列.splice(index, 1);
+          黃攻擊元素.remove();
+        }
+      });
+    }
+
+    function 創造綠攻擊(){
+    if (!gameActive) {
+        return; // 如果遊戲未開始，不生成
+      }
+      for (let i = 0; i < 4; i++) {
+    const 綠攻擊元素 = document.createElement('div')
+    綠攻擊元素.className = '綠攻擊';
+    document.getElementById('遊戲容器').appendChild(綠攻擊元素);
+
+    let 綠攻擊X座標, 綠攻擊Y座標;
+    綠攻擊X座標=玩家X座標-45+i*30;
+    綠攻擊Y座標=玩家Y座標-30;
+
+    綠攻擊元素.style.left = 綠攻擊X座標 + 'px';
+    綠攻擊元素.style.top  = 綠攻擊Y座標 + 'px';
+
+    綠攻擊陣列.push({ 綠X: 綠攻擊X座標, 綠Y: 綠攻擊Y座標  ,方向: ( i - 3.9 ) * Math.PI/ (5)  , 攻擊力: 0.5 ,元素: 綠攻擊元素 });
+  }
+}
+      // 更新綠攻擊的位置
+      function 更新綠攻擊移動() {
+      綠攻擊陣列.forEach((綠攻擊, index) => {
+        const 綠攻擊移動速度 = 7;
+
+    // 找到離綠攻擊最近的怪
+        let 最近的生氣貓;
+        let 最近的賽恩;
+        let 最小距離生氣貓 = Infinity;
+        let 最小距離賽恩 = Infinity;
+
+        生氣貓陣列.forEach(生氣貓 => {
+        const 距離 = Math.sqrt(Math.pow(生氣貓.喵X - 綠攻擊.綠X, 2) + Math.pow(生氣貓.喵Y - 綠攻擊.綠Y, 2));
+        if (距離 < 最小距離生氣貓) {
+        最小距離生氣貓 = 距離;
+        最近的生氣貓 = 生氣貓;
+        }
+        });
+        賽恩陣列.forEach(賽恩 => {
+        const 距離 = Math.sqrt(Math.pow(賽恩.X - 綠攻擊.綠X, 2) + Math.pow(賽恩.Y - 綠攻擊.綠Y, 2));
+        if (距離 < 最小距離賽恩) {
+        最小距離賽恩 = 距離;
+        最近的賽恩 = 賽恩;
+  }
+});
+     // 計算方向並移動
+     let 最終目標;
+     if (最小距離生氣貓 > 最小距離賽恩 && !最近的賽恩.無敵) {
+      最終目標 = 最近的賽恩;
+          } else if (最小距離生氣貓 < 最小距離賽恩){
+            最終目標 = 最近的生氣貓;
+          } else {最終目標=0;}
+      
+        if (最終目標 == 最近的賽恩) {綠攻擊.方向 = Math.atan2(最近的賽恩.Y - 綠攻擊.綠Y, 最近的賽恩.X - 綠攻擊.綠X);
+} else if (最終目標 == 最近的生氣貓) {綠攻擊.方向 = Math.atan2(最近的生氣貓.喵Y - 綠攻擊.綠Y, 最近的生氣貓.喵X - 綠攻擊.綠X);
+}
+        綠攻擊.綠X += Math.cos(綠攻擊.方向) * 綠攻擊移動速度;
+            綠攻擊.綠Y += Math.sin(綠攻擊.方向) * 綠攻擊移動速度;
+
+        const 綠攻擊元素 = document.getElementsByClassName('綠攻擊')[index];
+        if (gameActive == true) { //遊戲結束時停止
+          綠攻擊元素.style.left = 綠攻擊.綠X + 'px';
+          綠攻擊元素.style.top = 綠攻擊.綠Y + 'px';
+        }
+        // 移除超出邊界的攻擊
+        if (
+          綠攻擊.綠X < -10 ||
+          綠攻擊.綠Y < -10 ||
+          綠攻擊.綠X > 700 || 
+          綠攻擊.綠Y > 700 
+        ) {
+          綠攻擊陣列.splice(index, 1);
+          綠攻擊元素.remove();
+        }
+      });
+    }
+
+    function 更新武器攻擊(){  
+      document.addEventListener('keydown', (event) => {
+        
+        switch (event.key) {
+          case 'z':
+            if (!開始攻擊 && 玩家元素.style.display =='block') {
+
+          開始攻擊 = true;
+          處理攻擊();
+
+          }
+            break;
+        }
+      });
+      document.addEventListener('keyup', (event) => {
+        switch (event.key) {
+          case 'z':
+          開始攻擊 = false;
+            break;
+        }
+      });
+      // requestAnimationFrame(更新武器攻擊);
+}
+let 上次攻擊時間戳 = 0;
+const 攻擊延遲時間 = 200; // 500毫秒
+function 處理攻擊() {
+  const 現在時間戳 = Date.now();
+  if ((現在時間戳 - 上次攻擊時間戳 >= 攻擊延遲時間)&& 武器選擇陣列[武器選擇]=='紅色') {
+    創造紅攻擊();
+    上次攻擊時間戳 = 現在時間戳;
+  }else if ((現在時間戳 - 上次攻擊時間戳 >= 400)&& 武器選擇陣列[武器選擇]=='黃色') {
+    創造黃攻擊();
+    上次攻擊時間戳 = 現在時間戳;
+  }else if ((現在時間戳 - 上次攻擊時間戳 >= 100)&& 武器選擇陣列[武器選擇]=='綠色') {
+    創造綠攻擊();
+    上次攻擊時間戳 = 現在時間戳;
+  }
+  if (開始攻擊&& 玩家元素.style.display =='block') {
+    requestAnimationFrame(處理攻擊);
+  }
+}
+function 武器選擇中(targetElement) {
+  if (targetElement) {
+    const WQ = document.querySelectorAll('#遊戲容器 h5');
+    WQ.forEach(element => {
+      element.classList.remove('武器選擇中');
+    });
+    targetElement.classList.add('武器選擇中');
+  }
+}
+let 武器選擇 = 0;
+document.addEventListener('keyup', (event) => { 
+  if (gameActive) {
+    if (event.key === 'x') {
+      武器選擇 = (武器選擇 + 1) % 武器選擇陣列.length;
+    } else if (event.key === 'c') {
+      武器選擇 = (武器選擇 - 1 + 武器選擇陣列.length) % 武器選擇陣列.length;
+      
+    }
+    武器選擇中(document.getElementById(武器選擇陣列[武器選擇]));
+  }
+});
+    // 每0.1秒生成2個子彈
+    // setInterval(() => {
+    //   for (let i = 0; i < 2; i++) {
+    //     創建子彈();
+    //   }
+    // }, 100);
+
+
+    //失敗遊戲函數
+    // function fail() {
+    //   gameActive = false
+      // 失敗.style.display = 'block';
+    // }
+
+    const 生氣貓圖 = ['001.png','002.png','003.png','004.png','005.png','006.png','007.png','008.png','009.png','010.png','011.png','012.png','013.png','014.png','015.png','016.png','017.png','018.png'];
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'v' ) {
+        創造生氣貓()
+      }
+    });
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'f' ) {
+        創建滑稽球();
+      }
+    });
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 's' ) {
+        創建賽恩()
+      }
+    });
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'a' ) {
+        過場()
+      }
+    });
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'd' ) {
+        失敗.style.display = 'none'
+        生命值 +=3
+        生命元素.innerText = 'X' + 生命值;
+        if(生命值==3){
+        
+        玩家X座標=350;玩家Y座標=600;
+        setTimeout(function () {玩家元素.style.display = 'block';},100);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},100);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},400);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},700);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},1000);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},1300);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},1600);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},1900);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},2200);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},2500);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},2800);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},3100);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},3400);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},3700);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},4000);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},4300);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},4600);
+        setTimeout(function () {玩家元素.style.opacity =  0.4 ;},4900);
+        setTimeout(function () {玩家元素.style.opacity =  1.0 ;},5200); 
+        setTimeout(function () {無敵狀態 = false},5200);
+        }
+      }
+    });
+
+    // 創建貓
+    function 創造生氣貓(){
+    if (!gameActive) {
+        return; // 如果遊戲未開始，不生成
+      }
+   
+      const 生氣貓元素 = document.createElement('div')
+      
+      const 隨機索引 = Math.floor(Math.random() * 生氣貓圖.length);
+      const 隨機貓圖路徑 = 生氣貓圖[隨機索引];
+      
+      生氣貓元素.style.backgroundImage = `url('${隨機貓圖路徑}')`;
+
+      
+      生氣貓元素.className = '生氣貓 怪物';
+      // 生氣貓元素.dataset.血量 = 15;
+      document.getElementById('遊戲容器').appendChild(生氣貓元素);
+      生氣貓X座標=生怪磚.x;
+      生氣貓Y座標=生怪磚.y;
+      const 生氣貓 = {
+        喵X: 生氣貓X座標,
+        喵Y: 生氣貓Y座標,
+        方向: 生氣貓方向,
+        角度:0,
+        固定方向: false,
+        子彈X座標: 0,
+        子彈Y座標: 0,
+        貓停X: 停止X,
+        貓停Y: 停止Y,
+        上X: 上X,
+        上Y: 上Y,
+        下X: 下X,
+        下Y: 下Y,
+        左X: 左X,
+        左Y: 左Y,
+        右X: 右X,
+        右Y: 右Y,
+        左上X: 左上X,
+        左上Y: 左上Y,
+        右上X: 右上X,
+        右上Y: 右上Y,
+        左下X: 左下X,
+        左下Y: 左下Y,
+        右下X: 右下X,
+        右下Y: 右下Y,
+        貓轉角:貓轉角,
+        生氣貓轉:生氣貓轉,
+        原本圖:隨機貓圖路徑,
+        血量:生氣貓血量,
+        設定生氣貓移動速度:生氣貓移動速度,
+        上次創建子彈時間: Date.now()-1000,
+        隨機數: Math.floor(Math.random() * 3500) + 500
+    };
+   
+    生氣貓元素.style.left = 生氣貓X座標 + 'px';
+    生氣貓元素.style.top  = 生氣貓Y座標 + 'px';
+
+    生氣貓陣列.push(生氣貓);
+  }
+      // 更新生氣貓的位置
+      function 更新生氣貓移動() {
+      生氣貓陣列.forEach((生氣貓, index) => {
+      
+        執行生氣貓移動(生氣貓, index);
+        // 創建子彈(生氣貓);
+        子彈跟隨(生氣貓);
+      });
+}
+
+function 執行生氣貓移動(生氣貓, index) {
+        // 如果沒有固定方向，則計算並固定方向
+        // if (!生氣貓.固定方向) {
+        //   生氣貓.方向 = 生氣貓方向;
+        //   生氣貓.固定方向 = true;
+        // }
+
+        if(生氣貓.生氣貓轉){
+        生氣貓.喵X = 350 + Math.cos(生氣貓.貓轉角+= 0.002) *300;
+        生氣貓.喵Y = 350 + Math.sin(生氣貓.貓轉角+= 0.002) *300;
+      }else{
+        生氣貓.喵X += Math.cos(生氣貓.方向) * 生氣貓.設定生氣貓移動速度;
+        生氣貓.喵Y += Math.sin(生氣貓.方向) * 生氣貓.設定生氣貓移動速度;
+      }
+
+        const 生氣貓元素 = document.getElementsByClassName('生氣貓')[index];
+        if (gameActive == true) {
+          生氣貓元素.style.left = 生氣貓.喵X + 'px';
+          生氣貓元素.style.top = 生氣貓.喵Y + 'px';
+        }
+        if(Math.floor(生氣貓.喵X) == 生氣貓.貓停X && Math.floor(生氣貓.喵Y) == 生氣貓.貓停Y){生氣貓.設定生氣貓移動速度 = 0}
+        if(Math.floor(生氣貓.喵X) == 生氣貓.上X && Math.floor(生氣貓.喵Y) == 生氣貓.上Y){生氣貓.方向 = 方向上}
+        if(Math.floor(生氣貓.喵X) == 生氣貓.下X && Math.floor(生氣貓.喵Y) == 生氣貓.下Y){生氣貓.方向 = 方向下}
+        if(Math.floor(生氣貓.喵X) == 生氣貓.左X && Math.floor(生氣貓.喵Y) == 生氣貓.左Y){生氣貓.方向 = 方向左}
+        if(Math.floor(生氣貓.喵X) == 生氣貓.右X && Math.floor(生氣貓.喵Y) == 生氣貓.右Y){生氣貓.方向 = 方向右}
+        if(Math.floor(生氣貓.喵X) == 生氣貓.左上X && Math.floor(生氣貓.喵Y) == 生氣貓.左上Y){生氣貓.方向 = 方向左上}
+        if(Math.floor(生氣貓.喵X) == 生氣貓.右上X && Math.floor(生氣貓.喵Y) == 生氣貓.右上Y){生氣貓.方向 = 方向右上}
+        if(Math.floor(生氣貓.喵X) == 生氣貓.左下X && Math.floor(生氣貓.喵Y) == 生氣貓.左下Y){生氣貓.方向 = 方向左下}
+        if(Math.floor(生氣貓.喵X) == 生氣貓.右下X && Math.floor(生氣貓.喵Y) == 生氣貓.右下Y){生氣貓.方向 = 方向右下}
+       
+
+        // 移除超出邊界的攻擊
+        if (
+          生氣貓.喵X < -10 ||
+          生氣貓.喵Y < -10 ||
+          生氣貓.喵X > 700 || 
+          生氣貓.喵Y > 700 
+        ) {
+          生氣貓陣列.splice(index, 1);
+          生氣貓元素.remove();
+        }
+
+  // 判断怪物是否受到攻击
+  紅攻擊陣列.forEach((紅攻擊, RIndex) => {
+      if (碰撞检测(生氣貓, 紅攻擊)) {
+        // 生氣貓受到红攻击伤害
+        // 生氣貓元素.dataset.血量 -= 紅攻擊.攻擊力;
+        生氣貓.血量 -= 紅攻擊.攻擊力;
+
+        生氣貓元素.style.backgroundImage = `url('變白.png')`;
+        setTimeout(() => {
+        生氣貓元素.style.backgroundImage = `url(${生氣貓.原本圖})`;
+        }, 60); 
+
+        // 删除攻击
+        紅攻擊陣列.splice(RIndex, 1);
+        紅攻擊.元素.remove();
+      }
+    });
+  // 判断怪物是否受到攻击
+  黃攻擊陣列.forEach((黃攻擊, YIndex) => {
+      if (碰撞检测(生氣貓, 黃攻擊)) {
+        // 生氣貓受到攻击伤害
+        // 生氣貓元素.dataset.血量 -= 黃攻擊.攻擊力;
+        生氣貓.血量 -= 黃攻擊.攻擊力;
+
+        生氣貓元素.style.backgroundImage = `url('變白.png')`;
+        setTimeout(() => {
+        生氣貓元素.style.backgroundImage = `url(${生氣貓.原本圖})`;
+        }, 60); 
+        
+        // 删除攻击
+        黃攻擊陣列.splice(YIndex, 1);
+        黃攻擊.元素.remove();
+      }
+    });
+  // 判断怪物是否受到攻击
+  綠攻擊陣列.forEach((綠攻擊, GIndex) => {
+      if (碰撞检测(生氣貓, 綠攻擊)) {
+        // 生氣貓受到攻击伤害
+        // 生氣貓元素.dataset.血量 -= 綠攻擊.攻擊力;
+        生氣貓.血量 -= 綠攻擊.攻擊力;
+
+        生氣貓元素.style.backgroundImage = `url('變白.png')`;
+        setTimeout(() => {
+        生氣貓元素.style.backgroundImage = `url(${生氣貓.原本圖})`;
+        }, 60); 
+
+        // 删除攻击
+        綠攻擊陣列.splice(GIndex, 1);
+        綠攻擊.元素.remove();
+      }
+    });
+    
+    // if (生氣貓元素.dataset.血量 <= 0) {
+      if (生氣貓.血量 <= 0) {
+        爆炸X座標=生氣貓.喵X;
+        爆炸Y座標=生氣貓.喵Y;
+        爆炸();
+      生氣貓陣列.splice(index, 1);
+      生氣貓元素.remove();
+    }
+
+    
+//     轉圖片(生氣貓元素);
+// function 轉圖片(生氣貓元素) {
+
+//   function 旋轉() {
+//     生氣貓.角度 += 1; // 調整旋轉速度
+//     // 分別應用 translate 和 rotate
+//     生氣貓元素.style.transform = `translate(-50%, -50%) rotate(${生氣貓.角度}deg)`;
+//   }
+//   // 開始執行動畫
+//   旋轉();
+// }
+  }
+// 新增一個函數，用於執行子彈跟隨邏輯
+function 子彈跟隨(生氣貓) {
+  const 現在時間 = Date.now();
+  if (現在時間 - 生氣貓.上次創建子彈時間 >= 生氣貓.隨機數) {
+  
+        子彈X座標 = 生氣貓.喵X;
+        子彈Y座標 = 生氣貓.喵Y;
+        創建子彈();
+        生氣貓.上次創建子彈時間 = 現在時間;
+        生氣貓.隨機數= Math.floor(Math.random() * 3500) + 500
+    }
+}
+   // 碰撞检测函数
+function 碰撞检测(怪物, 攻擊) {
+  // 判断怪物与攻击是否相交，你可以根据实际需要修改这个判断条件
+  const 與怪物的距離 = Math.sqrt(
+    (Math.pow(怪物.喵X - 攻擊.紅X, 2) + Math.pow(怪物.喵Y - 攻擊.紅Y, 2)) ||
+    (Math.pow(怪物.喵X - 攻擊.黃X, 2) + Math.pow(怪物.喵Y - 攻擊.黃Y, 2)) ||
+    (Math.pow(怪物.喵X - 攻擊.綠X, 2) + Math.pow(怪物.喵Y - 攻擊.綠Y, 2)) ||
+    (Math.pow(怪物.X - 攻擊.紅X, 2) + Math.pow(怪物.Y - 攻擊.紅Y, 2)) ||
+    (Math.pow(怪物.X - 攻擊.黃X, 2) + Math.pow(怪物.Y - 攻擊.黃Y, 2)) ||
+    (Math.pow(怪物.X - 攻擊.綠X, 2) + Math.pow(怪物.Y - 攻擊.綠Y, 2)) 
+  );
+  return 與怪物的距離 < 30; // 这里使用了一个简单的半径判断
+}
+   // 創建一顆子彈
+   function 創建子彈() {
+  
+      if (!gameActive) {
+                return; // 如果遊戲未開始，不生成子彈
+            }
+      const 子彈元素 = document.createElement('div');
+      子彈元素.className = '子彈';
+      document.getElementById('遊戲容器').appendChild(子彈元素);
+
+  子彈元素.style.left = 子彈X座標 + 'px';
+  子彈元素.style.top = 子彈Y座標 + 'px';
+  子彈陣列.push({  x: 子彈X座標, y: 子彈Y座標});
+    }
+    // 更新子彈的位置
+    function 更新子彈() {
+  子彈陣列.forEach((子彈, index) => {
+    const 速度 = 4; 
+    // 如果子彈還沒有固定方向，則計算並固定方向
+    if (!子彈.固定方向) {
+      子彈.方向 = Math.atan2(玩家Y座標 - 子彈.y +Math.random() * 300-150, 玩家X座標 - 子彈.x +Math.random() * 300-150);
+      子彈.固定方向 = true;
+     }
+    子彈.x += Math.cos(子彈.方向) * 速度;
+    子彈.y += Math.sin(子彈.方向) * 速度;
+        // 判斷子彈是否碰到玩家
+        const 與玩家的距離 = Math.sqrt(
+          Math.pow(玩家X座標 - 子彈.x, 2) + Math.pow(玩家Y座標 - 子彈.y, 2)
+        );
+        if (與玩家的距離 < 7) {
+          // location.reload(); // 重新載入頁面
+          死掉();
+        }
+
+        const 子彈元素 = document.getElementsByClassName('子彈')[index];
+        子彈元素.style.left = 子彈.x + 'px';
+        子彈元素.style.top = 子彈.y + 'px';
+
+
+        // 移除超出邊界的子彈
+        if (
+          子彈.x < -10 ||
+          子彈.y < -10 ||
+          子彈.x > 700 || // 調整為700px
+          子彈.y > 700 // 調整為700px
+        ) {
+          子彈陣列.splice(index, 1);
+          子彈元素.remove();
+        }
+      });
+    }
+    function 創建滑稽球() {
+      if (!gameActive) {
+                return; // 如果遊戲未開始，不生成滑稽球
+            }
+      const 滑稽球元素 = document.createElement('div');
+      滑稽球元素.className = '滑稽球';
+      document.getElementById('遊戲容器').appendChild(滑稽球元素);
+
+      const 隨機邊緣 = Math.floor(Math.random() * 2); 
+
+      let 滑稽球X座標, 滑稽球Y座標;
+
+      switch (隨機邊緣) {
+        case 0: // 右
+          滑稽球X座標 = 700;
+          滑稽球Y座標 = Math.random() * 700;
+          break;
+        case 1: // 左
+          滑稽球X座標 = -10;
+          滑稽球Y座標 = Math.random() * 700;
+          break;
+      }
+
+      滑稽球元素.style.left = 滑稽球X座標 + 'px';
+      滑稽球元素.style.top = 滑稽球Y座標 + 'px';
+
+      滑稽球陣列.push({ x: 滑稽球X座標, y: 滑稽球Y座標,角度:0 });
+    }
+
+    // 更新滑稽球的位置
+    function 更新滑稽球() {
+  滑稽球陣列.forEach((滑稽球, index) => {
+    const 速度 = 2; // 將速度減緩
+    // 如果滑稽球還沒有固定方向，則計算並固定方向
+    if (!滑稽球.固定方向) {
+      滑稽球.方向 = Math.atan2(Math.random() * 600 +100 - 滑稽球.y, 350 - 滑稽球.x);
+      滑稽球.固定方向 = true;
+    }
+    滑稽球.x += Math.cos(滑稽球.方向) * 速度;
+    滑稽球.y += Math.sin(滑稽球.方向) * 速度;
+
+        // 判斷滑稽球是否碰到玩家
+        const 與玩家的距離 = Math.sqrt(
+          Math.pow(玩家X座標 - 滑稽球.x, 2) + Math.pow(玩家Y座標 - 滑稽球.y, 2)
+        );
+        if (與玩家的距離 < 40) {
+          // location.reload(); // 重新載入頁面
+          死掉();
+        }
+        const 滑稽球元素 = document.getElementsByClassName('滑稽球')[index];
+        滑稽球元素.style.left = 滑稽球.x + 'px';
+        滑稽球元素.style.top = 滑稽球.y + 'px';
+
+        轉圖片(滑稽球元素);
+function 轉圖片(滑稽球元素) {
+
+  function 旋轉() {
+    滑稽球.角度 -= 3; // 調整旋轉速度
+    // 分別應用 translate 和 rotate
+    滑稽球元素.style.transform = `translate(-50%, -50%) rotate(${滑稽球.角度}deg)`;
+  }
+  // 開始執行動畫
+  旋轉();
+}
+        // 移除超出邊界的滑稽球
+        if (
+          滑稽球.x < -10 ||
+          滑稽球.y < -10 ||
+          滑稽球.x > 700 || // 調整為700px
+          滑稽球.y > 700 // 調整為700px
+        ) {
+          滑稽球陣列.splice(index, 1);
+          滑稽球元素.remove();
+        }
+      });
+    }
+    function 爆炸() {
+      if (!gameActive) {return;} 
+  const 爆炸元素 = document.createElement('div');
+  爆炸元素.className = '爆炸';
+  document.getElementById('遊戲容器').appendChild(爆炸元素);
+  爆炸元素.style.left = 爆炸X座標 + 'px';
+  爆炸元素.style.top = 爆炸Y座標 + 'px';
+  爆炸陣列.push({  x: 爆炸X座標, y: 爆炸Y座標});
+  爆炸陣列.splice(0, 爆炸陣列.length);
+  setTimeout(function () {
+    爆炸元素.remove();
+}, 300);
+    }
+
+    // let 賽恩定時器 ;
+    function 創建賽恩(){
+      if (!gameActive) {return;}
+      const 賽恩元素 = document.createElement('div')
+    
+      賽恩元素.className = '賽恩 怪物';
+      document.getElementById('遊戲容器').appendChild(賽恩元素);
+      賽恩X座標=350;
+      賽恩Y座標=35;
+      賽恩血量=600;
+      賽恩移動速度=0.5;
+      const 賽恩 = {
+        X:賽恩X座標,
+        Y:賽恩Y座標,
+        方向:方向下,
+        固定方向: false,
+        無敵: false,
+        血量:賽恩血量,
+        移動速度:賽恩移動速度,
+        創造時間:new Date().getTime(),
+        一刀:0,
+        Q:0,
+        施法中:false,
+        撞循環:false,
+        先往回走:false,
+        A他一刀:false,
+        殭屍:false,
+        };
+     賽恩元素.style.left = 賽恩X座標 + 'px';
+     賽恩元素.style.top  = 賽恩Y座標 + 'px';
+     賽恩陣列.push(賽恩);
+
+setInterval(更新賽恩時間,100)
+function 更新賽恩時間(){
+  if (!賽恩陣列) {return;}
+var 當前時間 = new Date().getTime();
+var 經過時間 = ((當前時間-賽恩.創造時間)/1000).toFixed(1);
+let 賽恩血百分比 = (賽恩.血量/6).toFixed(0)
+     if(經過時間 == 1 ){賽恩.方向=方向左;賽恩.移動速度=3;}
+else if(!賽恩.殭屍 && 經過時間 >= 2 && !無敵狀態  && !賽恩.撞循環){賽恩撞(賽恩);賽恩.撞循環 = true; setTimeout(function(){ 賽恩.撞循環 = false;},8000)}
+else if(!賽恩.殭屍 && 經過時間 >= 7 && !賽恩.A他一刀 ){A他一刀(賽恩);賽恩.A他一刀=true;setTimeout(function(){ 賽恩.A他一刀 = false;},3000)}
+else if(!賽恩.殭屍 && 經過時間 >= 7  && 賽恩.X > 500 && 賽恩.Y <= 90  ){賽恩.方向=方向左;賽恩.移動速度=5;}
+else if(!賽恩.殭屍 && 經過時間 >= 7  && 賽恩.X <100 && 賽恩.Y <= 90 ){賽恩.方向=方向右;賽恩.移動速度=5;}
+else if(!賽恩.殭屍 && 賽恩血百分比<=75 && 賽恩血百分比>=70 && 賽恩.一刀 == 0&& !賽恩.無敵){賽恩.無敵=true;賽恩.一刀 += 1;一刀兩刀(賽恩)}
+else if(!賽恩.殭屍 && 賽恩血百分比<=50 && 賽恩血百分比>=45 && 賽恩.Q == 0 && !賽恩.先往回走){賽恩.方向=方向上;賽恩.移動速度=3;賽恩.無敵=true;賽恩.施法中= true;setTimeout(function(){ 賽恩.先往回走=true;},2000)}
+else if(!賽恩.殭屍 && 賽恩血百分比<=50 && 賽恩血百分比>=45 && 賽恩.Q == 0 && 賽恩.先往回走 && !無敵狀態  && Math.sqrt(Math.pow(玩家X座標 - 賽恩.X, 2) + Math.pow(玩家Y座標 - 賽恩.Y, 2)) >= 200){賽恩.方向=Math.atan2(玩家Y座標 - 賽恩.Y , 玩家X座標 - 賽恩.X);賽恩.無敵=true;賽恩.移動速度=5;}
+else if(!賽恩.殭屍 && 賽恩血百分比<=50 && 賽恩血百分比>=45 && 賽恩.Q == 0 && 賽恩.先往回走 && !無敵狀態  && Math.sqrt(Math.pow(玩家X座標 - 賽恩.X, 2) + Math.pow(玩家Y座標 - 賽恩.Y, 2)) <= 200){賽恩.方向=Math.atan2(玩家Y座標 - 賽恩.Y , 玩家X座標 - 賽恩.X);賽恩.無敵=true;賽恩.移動速度=0;E接Q(賽恩);}
+else if(!賽恩.殭屍 && 賽恩血百分比<=25 && 賽恩血百分比>=20 && 賽恩.一刀 == 1&& !賽恩.無敵){賽恩.無敵=true;賽恩.一刀 += 1;英文刀(賽恩)}
+else if(!賽恩.殭屍 && 賽恩.血量 <= 0){賽恩.殭屍=true;賽恩.移動速度=0;賽恩.無敵=true;播放音效('殭屍'); }
+else if(賽恩.殭屍 && 賽恩.血量 <= 0){setTimeout(function(){ 殭屍(賽恩)},3000);}
+}
+}
+function 一刀兩刀(賽恩){
+  if (!賽恩陣列) {return;}
+  賽恩.施法中= true ;
+  賽恩.方向=Math.atan2(85 - 賽恩.Y , 600 - 賽恩.X);賽恩.移動速度=3;
+創建斧頭(賽恩);播放音效('一刀');
+setTimeout(function () {創建斧頭(賽恩);播放音效('兩刀');},1000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('三刀');},2000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('四刀');},3000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('五刀');},4000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('六刀');},5000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('七刀');},6000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('八刀');},7000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('九刀');},8000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('十刀');},9000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('十一刀');},10000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('十二刀');},11000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('十三刀');},12000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('十四刀');},13000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('十五刀');},14000);
+setTimeout(function () {賽恩.無敵=false;賽恩.移動速度=3;賽恩.施法中=false;},15000);
+}
+function E接Q(賽恩){
+  if (!賽恩陣列) {return;}
+  賽恩.施法中= true ;
+  創建億(賽恩);
+  賽恩.Q += 1;
+  setTimeout(function(){ 創建技能Q(賽恩)},1000);
+  setTimeout(function(){ 賽恩.無敵=false;賽恩.方向=Math.atan2(85 - 賽恩.Y , 600 - 賽恩.X);賽恩.移動速度=3;賽恩.施法中=false;},4000);
+}
+function 賽恩撞(賽恩){
+  if (!賽恩.施法中 && !賽恩.殭屍) {
+  賽恩.移動速度=0;
+  setTimeout(function(){ if (!賽恩.施法中&& !賽恩.殭屍) {賽恩.方向=Math.atan2(玩家Y座標 - 賽恩.Y , 玩家X座標 - 賽恩.X);賽恩.移動速度=12;}},1000);
+  setTimeout(function(){ if (!賽恩.施法中&& !賽恩.殭屍) {賽恩.方向=Math.atan2(85 - 賽恩.Y , 600 - 賽恩.X);賽恩.移動速度=3;}},2000);}
+}
+function A他一刀(賽恩){
+ if (!賽恩.施法中&& !賽恩.殭屍) {
+ 創建斧頭(賽恩);
+//  播放音效('A他一刀');
+};}
+function 英文刀(賽恩){
+  if (!賽恩陣列) {return;}
+  賽恩.施法中= true ;
+  賽恩.方向=Math.atan2(85 - 賽恩.Y , 600 - 賽恩.X);賽恩.移動速度=3;
+創建斧頭(賽恩);播放音效('1A');
+setTimeout(function () {創建斧頭(賽恩);播放音效('2A');},700);
+setTimeout(function () {創建斧頭(賽恩);播放音效('3A');},1400);
+setTimeout(function () {創建斧頭(賽恩);播放音效('4A');},2100);
+setTimeout(function () {創建斧頭(賽恩);播放音效('5A');},2800);
+setTimeout(function () {創建斧頭(賽恩);播放音效('6A');},3500);
+setTimeout(function () {創建斧頭(賽恩);播放音效('7A');},4200);
+setTimeout(function () {創建斧頭(賽恩);播放音效('8A');},4900);
+setTimeout(function () {創建斧頭(賽恩);播放音效('9A');},5600);
+setTimeout(function () {創建斧頭(賽恩);播放音效('10A');},6300);
+setTimeout(function () {創建斧頭(賽恩);播放音效('藤往後什麼1');},7000);
+setTimeout(function () {創建斧頭(賽恩);播放音效('藤往後什麼2');},7700);
+setTimeout(function () {創建斧頭(賽恩);播放音效('藤往後什麼3');},8400);
+setTimeout(function () {賽恩.無敵=false;賽恩.移動速度=3;賽恩.施法中=false;},9000);
+}
+let 爆一次 = 0 ;
+function 殭屍(賽恩){
+賽恩.無敵= false ;
+賽恩.方向=Math.atan2(玩家Y座標 - 賽恩.Y , 玩家X座標 - 賽恩.X);
+if (Math.sqrt(Math.pow(玩家X座標 - 賽恩.X, 2) + Math.pow(玩家Y座標 - 賽恩.Y, 2)) <= 30) {賽恩.移動速度=0}
+else{賽恩.移動速度=5}
+setTimeout(function () {
+if (!爆一次) {
+
+       爆炸X座標=賽恩.X;
+       爆炸Y座標=賽恩.Y;
+       爆一次+=1;
+       爆炸();
+       賽恩陣列.forEach((賽恩, index) => {
+      賽恩陣列.splice(index, 1);
+      document.getElementsByClassName('賽恩')[index].remove();
+      setTimeout(function () {過場()},3000)
+ });
+ }
+},10000)
+
+}
+
+function 更新賽恩移動() {
+  if (!gameActive) {return;}
+      賽恩陣列.forEach((賽恩, index) => {
+        // 如果沒有固定方向，則計算並固定方向
+        // if (!賽恩.固定方向) {
+        //   賽恩.方向 = 方向下;
+        //   賽恩.固定方向 = true;
+        // }
+        賽恩.X += Math.cos(賽恩.方向) * 賽恩.移動速度;
+        賽恩.Y += Math.sin(賽恩.方向) * 賽恩.移動速度;
+
+        const 賽恩元素 = document.getElementsByClassName('賽恩')[index];
+        if (gameActive == true) { //遊戲結束時停止
+          賽恩元素.style.left = 賽恩.X + 'px';
+          賽恩元素.style.top = 賽恩.Y + 'px';
+        }
+        // 固定不要走出邊界
+        賽恩.X = Math.max(35, Math.min(賽恩.X, 660));
+        賽恩.Y = Math.max(35, Math.min(賽恩.Y, 660));
+        
+        const 與玩家的距離 = Math.sqrt(
+          Math.pow(玩家X座標 - 賽恩.X, 2) + Math.pow(玩家Y座標 - 賽恩.Y, 2)
+        );
+        if (與玩家的距離 < 50 && !無敵狀態) {
+          播放音效('不滅之握');
+          死掉();
+        }
+
+
+  // 判断怪物是否受到攻击
+  紅攻擊陣列.forEach((紅攻擊, RIndex) => {
+      if (碰撞检测(賽恩, 紅攻擊)&& !賽恩.無敵) {
+        // 賽恩受到红攻击伤害
+        賽恩.血量 -= 紅攻擊.攻擊力;
+
+        賽恩元素.style.backgroundImage = `url('賽恩白.png')`;
+        setTimeout(() => {
+        賽恩元素.style.backgroundImage = `url('賽恩.png')`;
+        }, 60); 
+        // 删除攻击
+        紅攻擊陣列.splice(RIndex, 1);
+        紅攻擊.元素.remove();
+      }
+    });
+  // 判断怪物是否受到攻击
+  黃攻擊陣列.forEach((黃攻擊, YIndex) => {
+      if (碰撞检测(賽恩, 黃攻擊)&& !賽恩.無敵) {
+        // 賽恩受到攻击伤害
+        賽恩.血量 -= 黃攻擊.攻擊力;
+        賽恩元素.style.backgroundImage = `url('賽恩白.png')`;
+        setTimeout(() => {
+        賽恩元素.style.backgroundImage = `url('賽恩.png')`;
+        }, 60); 
+        // 删除攻击
+        黃攻擊陣列.splice(YIndex, 1);
+        黃攻擊.元素.remove();
+      }
+    });
+  // 判断怪物是否受到攻击
+  綠攻擊陣列.forEach((綠攻擊, GIndex) => {
+      if (碰撞检测(賽恩, 綠攻擊) && !賽恩.無敵) {
+        // 賽恩受到攻击伤害
+        賽恩.血量 -= 綠攻擊.攻擊力;
+        賽恩元素.style.backgroundImage = `url('賽恩白.png')`;
+        setTimeout(() => {
+        賽恩元素.style.backgroundImage = `url('賽恩.png')`;
+        }, 60); 
+        // 删除攻击
+        綠攻擊陣列.splice(GIndex, 1);
+        綠攻擊.元素.remove();
+      }
+    });
+
+
+
+    // if (賽恩.血量 <= 0) {
+        // 爆炸X座標=賽恩.X;
+        // 爆炸Y座標=賽恩.Y;
+        // 爆炸();
+      // 賽恩陣列.splice(index, 1);
+      // 賽恩元素.remove();
+    // }
+  });
+  // 上左右
+  
+  
+}
+
+
+function 創建斧頭(賽恩) {
+      if (!gameActive) { return; }// 如果遊戲未開始，不生成斧頭 
+      const 斧頭元素 = document.createElement('div');
+      斧頭元素.className = '斧頭';
+      document.getElementById('遊戲容器').appendChild(斧頭元素);
+      斧頭X座標=賽恩.X;
+      斧頭Y座標=賽恩.Y;
+
+  斧頭元素.style.left = 斧頭X座標 + 'px';
+  斧頭元素.style.top = 斧頭Y座標 + 'px';
+  斧頭陣列.push({  x: 斧頭X座標, y: 斧頭Y座標 ,角度:0});
+    }
+    // 更新斧頭的位置
+    function 更新斧頭() {
+  斧頭陣列.forEach((斧頭, index) => {
+    const 速度 = 3; 
+    // 如果斧頭還沒有固定方向，則計算並固定方向
+    if (!斧頭.固定方向) {
+      斧頭.方向 = Math.atan2(玩家Y座標 - 斧頭.y +Math.random() * 100-50, 玩家X座標 - 斧頭.x +Math.random() * 100-50);
+      斧頭.固定方向 = true;
+     }
+    斧頭.x += Math.cos(斧頭.方向) * 速度;
+    斧頭.y += Math.sin(斧頭.方向) * 速度;
+        // 判斷斧頭是否碰到玩家
+        const 與玩家的距離 = Math.sqrt(
+          Math.pow(玩家X座標 - 斧頭.x, 2) + Math.pow(玩家Y座標 - 斧頭.y, 2)
+        );
+        if (與玩家的距離 < 100) {
+          // location.reload(); // 重新載入頁面
+          死掉();
+        }
+        const 斧頭元素 = document.getElementsByClassName('斧頭')[index];
+        斧頭元素.style.left = 斧頭.x + 'px';
+        斧頭元素.style.top = 斧頭.y + 'px';
+
+        轉圖片(斧頭元素);
+function 轉圖片(斧頭元素) {
+
+  function 旋轉() {
+    斧頭.角度 -= 3; // 調整旋轉速度
+    // 分別應用 translate 和 rotate
+    斧頭元素.style.transform = `translate(-50%, -50%) rotate(${斧頭.角度}deg)`;
+  }
+  // 開始執行動畫
+  旋轉();
+}
+
+        // 移除超出邊界的斧頭
+        if (
+          斧頭.x < -10 ||
+          斧頭.y < -10 ||
+          斧頭.x > 700 || // 調整為700px
+          斧頭.y > 700 // 調整為700px
+        ) {
+          斧頭陣列.splice(index, 1);
+          斧頭元素.remove();
+        }
+      });
+    }
+
+    function 創建億(賽恩) {
+      if (!gameActive) { return; }// 如果遊戲未開始，不生成億 
+      播放音效('給他億');
+      const 億元素 = document.createElement('div');
+      億元素.className = '億';
+      document.getElementById('遊戲容器').appendChild(億元素);
+      億X座標=賽恩.X;
+      億Y座標=賽恩.Y;
+  億元素.style.left = 億X座標 + 'px';
+  億元素.style.top = 億Y座標 + 'px';
+  億陣列.push({  x: 億X座標, y: 億Y座標 ,角度:0});
+    }
+    // 更新億的位置
+    function 更新億() {
+  億陣列.forEach((億, index) => {
+    const 速度 = 8; 
+    // 如果億還沒有固定方向，則計算並固定方向
+    if (!億.固定方向) {
+      億.方向 = Math.atan2(玩家Y座標 - 億.y , 玩家X座標 - 億.x);
+      億.固定方向 = true;
+     }
+    
+    億.x += Math.cos(億.方向) * 速度;
+    億.y += Math.sin(億.方向) * 速度;
+        // 判斷億是否碰到玩家
+        const 與玩家的距離 = Math.sqrt(
+        Math.pow(玩家X座標 - 億.x, 2) + Math.pow(玩家Y座標 - 億.y, 2)
+        );
+        if (與玩家的距離 < 70) {
+          緩速 = 0.2;
+          setTimeout(function () {緩速=1},3000);
+        }
+        const 億元素 = document.getElementsByClassName('億')[index];
+        億元素.style.left = 億.x + 'px';
+        億元素.style.top = 億.y + 'px';
+        // 移除超出邊界的億
+        if (
+          億.x < -10 ||
+          億.y < -10 ||
+          億.x > 700 || // 調整為700px
+          億.y > 700 // 調整為700px
+        ) {
+          億陣列.splice(index, 1);
+          億元素.remove();
+        }
+      });
+    }
+    function 創建技能Q(賽恩) {
+      if (!gameActive) { return; }// 如果遊戲未開始，不生成技能Q 
+      播放音效('特別狠的球');
+      const 技能Q元素 = document.createElement('div');
+      技能Q元素.className = '技能Q';
+      document.getElementById('遊戲容器').appendChild(技能Q元素);
+      技能QX座標=玩家X座標 +10;
+      技能QY座標=玩家Y座標-100;
+      技能Q元素.style.left = 技能QX座標 + 'px';
+      技能Q元素.style.top = 技能QY座標 + 'px';
+      技能Q陣列.push({  x: 技能QX座標, y: 技能QY座標 ,角度:0});
+ 
+
+    }
+    // 更新技能Q的位置
+    function 更新技能Q(賽恩) {
+  技能Q陣列.forEach((技能Q, index) => {
+
+    const 幅度 = 2;
+    const 最終高度 = 244;
+    const 間隔 = 100;
+    const 技能Q元素 = document.getElementsByClassName('技能Q')[index];
+    const 遊戲容器元素 = document.getElementById('遊戲容器');
+    // function 生成圖片() {
+    //   技能Q元素.style.height=`${parseInt(技能Q元素.style.height || 0) + 幅度}px`;
+    
+    // }
+    if (parseInt(技能Q元素.style.height || 0) < 最終高度) {
+      技能Q元素.style.height=`${parseInt(技能Q元素.style.height || 0) + 幅度}px`;
+// 生成圖片();
+}
+        
+        const 技能Q矩形 = 技能Q元素.getBoundingClientRect();
+        const 遊戲容器矩形 = 遊戲容器元素.getBoundingClientRect();
+        // 计算技能Q的左上角和右下角坐标
+        const 技能Q左上角X = 遊戲容器矩形.left - 技能Q矩形.left    
+        const 技能Q左上角Y = 遊戲容器矩形.top - 技能Q矩形.top      
+        const 技能Q右下角X = 遊戲容器矩形.right - 技能Q矩形.right  
+        const 技能Q右下角Y = 遊戲容器矩形.bottom - 技能Q矩形.bottom
+
+if (
+  // 玩家X座標 >= 技能Q左上角X &&  
+  // 玩家X座標 <= 技能Q右下角X &&  
+  // 玩家Y座標 >= 技能Q左上角Y &&  
+  // 玩家Y座標 <= 技能Q右下角Y &&  
+  玩家X座標 >= 技能Q.x-82 &&  
+  玩家X座標 <= 技能Q.x+66 &&  
+  玩家Y座標 >= 技能Q.y+16 &&  
+  玩家Y座標 <= 技能Q.y+212 &&  
+  技能Q元素.style.height == '244px'
+) {
+  死掉();
+  setTimeout(function(){播放音效('嘿嘿')},800);
+}
+        技能Q元素.style.left = 技能Q.x + 'px';
+        技能Q元素.style.top = 技能Q.y + 'px';
+
+        setTimeout(function () {
+          技能Q陣列.splice(index, 1);
+          技能Q元素.remove();
+        },2000);
+      });
+    }
+
+    function 過場() {
+  const 過場元素 = document.createElement('div');
+  過場元素.className = '過場';
+  document.getElementById('過場').appendChild(過場元素);
+  過場元素.style.left = 1300 + 'px'
+
+  function 更新(){
+    過場元素.style.left = (parseInt(過場元素.style.left) - 50) + 'px';
+    if(過場元素 && parseInt(過場元素.style.left)> -800){
+  setTimeout(function () { 更新()},20);
+  }
+}
+更新();
+  setTimeout(function () {
+    過場元素.remove();
+}, 1500);
+
+  setTimeout(function () { 
+    gameActive = false;
+    結束計時();
+    失敗.style.display = 'none';
+    子彈陣列.length = 0;
+    滑稽球陣列.length = 0;
+    爆炸陣列.length = 0;
+    斧頭陣列.length = 0;
+    賽恩陣列.length = 0;
+    億陣列.length = 0;
+    技能Q陣列 .length = 0;
+    // 武器選擇陣列.length = 0;
+    紅攻擊陣列.length = 0;
+    黃攻擊陣列.length = 0;
+    綠攻擊陣列.length = 0;
+    生氣貓陣列.length = 0;
+    startScreen.style.display = 'block'; 
+  gameContainer.style.display = 'none'; // 隱藏遊戲容器
+}, 450);
+
+    }
+
+    // 更新玩家位置
+    function 更新玩家() {
+      document.addEventListener('keydown', (event) => {
+        switch (event.key) {
+          case 'ArrowUp':
+            上移 = true;
+            break;
+          case 'ArrowDown':
+            下移 = true;
+            break;
+          case 'ArrowLeft':
+            左移 = true;
+            break;
+          case 'ArrowRight':
+            右移 = true;
+            break;
+        }
+      });
+
+      document.addEventListener('keyup', (event) => {
+        switch (event.key) {
+          case 'ArrowUp':
+            上移 = false;
+            break;
+          case 'ArrowDown':
+            下移 = false;
+            break;
+          case 'ArrowLeft':
+            左移 = false;
+            break;
+          case 'ArrowRight':
+            右移 = false;
+            break;
+        }
+      });
+      document.addEventListener('keydown', (event) => {
+        switch (event.key) {
+          case 'Shift':
+            加速 = true;
+            break;
+        }
+      });
+
+      document.addEventListener('keyup', (event) => {
+        switch (event.key) {
+          case 'Shift':
+            加速 = false;
+            break;
+        }
+      });
+    }
+      // 使用 requestAnimationFrame 來連續更新玩家位置
+      function 更新玩家移動() {
+        var 移動速度 = 4 * 緩速
+        if (加速) {
+          移動速度 = 8 * 緩速
+        }
+        if (上移) {
+          玩家Y座標 -= 移動速度;
+        }
+        if (下移) {
+          玩家Y座標 += 移動速度;
+        }
+        if (左移) {
+          玩家X座標 -= 移動速度;
+        }
+        if (右移) {
+          玩家X座標 += 移動速度;
+        }
+
+        // 保持玩家在邊界內
+        玩家X座標 = Math.max(20, Math.min(玩家X座標, 680));
+        玩家Y座標 = Math.max(20, Math.min(玩家Y座標, 680));
+
+        if (gameActive == true) { //遊戲結束時玩家停止
+          玩家元素.style.left = 玩家X座標 + 'px';
+          玩家元素.style.top = 玩家Y座標 + 'px';
+        }
+
+
+
+        // 持續更新玩家移動
+        // 更新玩家移動();
+        // requestAnimationFrame(更新玩家移動);
+      }
+
+    
+
+    var 圖片組 = [
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+      '低.png', '中.png', '高.png', '中.png', '低.png', '中.png', '高.png', '中.png',
+    ];
+
+    // 预加载图片
+    var 预加载图片 = [];
+    for (var i = 0; i < 圖片組.length; i++) {
+      var 图片 = new Image();
+      图片.src = 圖片組[i];
+      预加载图片.push(图片);
+    }
+
+    // 初始显示第一张图片
+    玩家元素.style.backgroundImage = 'url(' + 圖片組[0] + ')';
+
+    // 定时更换图片
+    var 當前圖片 = 0;
+    setInterval(function () {
+      當前圖片 = (當前圖片 + 1) % 圖片組.length;
+      玩家元素.style.backgroundImage = 'url(' + 圖片組[當前圖片] + ')';
+    }, 100);
+
+    // 遊戲循環
+    function 遊戲迴圈() {
+
+      更新技能Q() ;
+      更新億() ;
+      更新滑稽球();
+      更新斧頭();
+      更新子彈();
+      更新賽恩移動();
+      更新生氣貓移動();
+      更新紅攻擊移動();
+      更新黃攻擊移動();
+      更新綠攻擊移動();
+      if(玩家元素.style.display =='block'){更新玩家移動()};
+      // requestAnimationFrame(遊戲迴圈);
+    }
+    // 更新玩家移動();
+    更新武器攻擊();
+    更新玩家();
+    // setInterval(更新紅攻擊移動, 16); // 60fps
+    // setInterval(更新黃攻擊移動, 16); // 60fps
+    // setInterval(更新綠攻擊移動, 16); // 60fps
+    //  requestAnimationFrame(更新紅攻擊移動); // 60fps
+    //  requestAnimationFrame(更新黃攻擊移動); // 60fps
+    //  requestAnimationFrame(更新綠攻擊移動); // 60fps
+    遊戲迴圈();
+    // requestAnimationFrame(遊戲迴圈);
+    setInterval(遊戲迴圈, 10);
+  </script>
+</body>
+
+</html>
